@@ -1,0 +1,14 @@
+[
+    {
+        "index": 1,
+        "name": "Temperature"
+    },
+    {
+        "index": 2,
+        "name": "Humidity"
+    },
+    {
+        "index": 3,
+        "name": "Pressure"
+    }
+]
