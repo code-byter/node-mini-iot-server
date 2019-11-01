@@ -28,7 +28,7 @@ export const WriteFilesRoute: RouteFactory = {
 
             req.on('end', function () {
                 if (prefixTimestamp) {
-                    fs.writeFileSync(filePath, "\n" + Date.now() + "," + body, {
+                    fs.writeFileSync(filePath, "\n" + Date.now() + "," + body.trim(), {
                         encoding: "UTF-8",
                         flag: append ? "a" : undefined
                     });
