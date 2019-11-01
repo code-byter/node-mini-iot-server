@@ -7,6 +7,12 @@ export const WriteFilesRoute: RouteFactory = {
         router.post("/files/:uuid/:file", (req: Request, res: Response, next) => {
             console.log("POST WriteFiles /" + req.params.uuid + "/" + req.params.file);
 
+            const folder = config.dataDir + "/" + req.params.uuid;
+            if (!fs.existsSync(folder)) {
+                console.log("Creating", folder);
+                fs.mkdirSync(folder);
+            }
+
             const filePath = config.dataDir + "/" + req.params.uuid + "/" + req.params.file;
             const append: boolean = req.query.append === "true";
             const prefixTimestamp: boolean = req.query.tsprefix === "true";

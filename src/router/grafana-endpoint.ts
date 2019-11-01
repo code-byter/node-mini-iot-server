@@ -221,7 +221,7 @@ export const CsvToGrafanaRoute: RouteFactory = {
                         }
                     }
                     else if (target.type === "table") {
-                        // TODO
+                        // TODO: support table
                     }
                 });
 
