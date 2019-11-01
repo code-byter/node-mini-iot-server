@@ -55,15 +55,19 @@ const getCSV = (filePath: string) => {
     }
 }
 
-const createDataPointMap = (descr: CSVDescriptor, data: number[][]) => {
+const createDataPointMap = (descr: CSVDescriptor, data: number[][], from?: number, to?: number) => {
     const dataPoints: GrafanaDataPointMap = {};
     descr.columns.forEach(col => {
         if (col.index !== 0) {
             dataPoints[col.index] = [];
         }
     });
+
     // collect data for each column
-    data.forEach(row => {
+    const filterdedData = data
+        .filter(row => from ? from <= row[0] : true)
+        .filter(row => to ? row[0] <= to : true);
+    filterdedData.forEach(row => {
         descr.columns.forEach(col => {
             if (col.index !== 0) {
                 // [value, timestamp]
@@ -71,6 +75,9 @@ const createDataPointMap = (descr: CSVDescriptor, data: number[][]) => {
             }
         });
     });
+
+    console.log("Data: ", data.length, "=>", filterdedData.length);
+
     return dataPoints;
 }
 
@@ -107,32 +114,25 @@ export const CsvToGrafanaRoute: RouteFactory = {
 
     register: (config: MiniIotConfig, router: Router) => {
 
+        // / should return 200 ok. Used for "Test connection" on the datasource config page.
         router.all("/csv2grafana/:uuid/:file/", (req: Request, res: Response) => {
             setCORSHeaders(res);
-            console.log(req.url);
-            console.log(req.body);
 
-            // / should return 200 ok. Used for "Test connection" on the datasource config page.
             if (!req.params.file.endsWith(".csv")) {
                 res.status(400).end();
             }
 
             const filePath = config.dataDir + "/" + req.params.uuid + "/" + req.params.file;
-
             if (!fs.existsSync(filePath)) {
                 res.status(404).end();
             }
-
-            const data = fs.readFileSync(filePath, { encoding: "UTF-8" });
-            // rule: first column is timestamp!
 
             res.status(200).end();
         });
 
         router.all("/csv2grafana/:uuid/:file/search", (req: Request, res: Response) => {
             setCORSHeaders(res);
-            console.log(req.url);
-            console.log(req.body);
+            // TODO: support search parameters
 
             // return a result of targets
             const filePath = config.dataDir + "/" + req.params.uuid + "/" + req.params.file;
@@ -154,9 +154,6 @@ export const CsvToGrafanaRoute: RouteFactory = {
 
         router.all("/csv2grafana/:uuid/:file/annotations", (req: Request, res: Response) => {
             setCORSHeaders(res);
-            console.log(req.url);
-            console.log(req.body);
-
             // TODO: add annotation support
 
             res.json([]);
@@ -200,8 +197,17 @@ export const CsvToGrafanaRoute: RouteFactory = {
                 const result: any = [];
                 const data = getCSV(filePath);
                 const descr = getCSVDescriptor(filePath);
-                const dataPoints = createDataPointMap(descr, data);
 
+                // query - from/to
+                const from: number = req.body.range && (new Date(req.body.range.from)).getTime();
+                const to: number = req.body.range && (new Date(req.body.range.to)).getTime();
+                // TODO: query - intervalMs
+
+                // TODO: query - maxDataPoints
+                // TODO: query - adhocFilters
+                const dataPoints = createDataPointMap(descr, data, from, to);
+
+                // query - targets
                 req.body.targets.forEach((target: any) => {
 
                     if (target.type === "timeserie") {
@@ -226,8 +232,7 @@ export const CsvToGrafanaRoute: RouteFactory = {
 
         router.all('/tag[\-]keys', (req: Request, res: Response) => {
             setCORSHeaders(res);
-            console.log(req.url);
-            console.log(req.body);
+            // TODO: support tag-keys api
 
             res.json([]);
             res.end();
@@ -235,8 +240,7 @@ export const CsvToGrafanaRoute: RouteFactory = {
 
         router.all('/tag[\-]values', (req: Request, res: Response) => {
             setCORSHeaders(res);
-            console.log(req.url);
-            console.log(req.body);
+            // TODO: support tag-values api
 
             res.json([]);
             res.end();
