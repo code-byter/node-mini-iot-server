@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 // https://grafana.com/grafana/plugins/grafana-simple-json-datasource
 
-// I used this for copy and paste: https://github.com/bergquist/fake-simple-json-datasource/blob/master/index.js
+// I used this for (initial) copy and paste: https://github.com/bergquist/fake-simple-json-datasource/blob/master/index.js
 
 const setCORSHeaders = (res: Response) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -47,7 +47,6 @@ const getCSV = (filePath: string) => {
             .map(line => line.split(",").map(entry => {
                 const num = parseFloat(entry);
                 const value = isNaN(num) ? 0 : num;
-                console.log(entry, "=>", value);
                 return value;
             })); // map line to column
         return result;
@@ -158,7 +157,7 @@ export const CsvToGrafanaRoute: RouteFactory = {
             console.log(req.url);
             console.log(req.body);
 
-            // TODO: check for an annotations file, if missing create an empty so we know how to fill it manually.
+            // TODO: add annotation support
 
             res.json([]);
             res.end();
@@ -173,7 +172,8 @@ export const CsvToGrafanaRoute: RouteFactory = {
 
             var tsResult: GrafanaTableResponse | GrafanaTimeserieResponse = [];
 
-            const exmpleQuery = { // TODO: remove
+            // TODO: query support
+            const exmpleQuery = {
                 requestId: 'Q102',
                 timezone: '',
                 panelId: 2,
@@ -195,10 +195,6 @@ export const CsvToGrafanaRoute: RouteFactory = {
                 rangeRaw: { from: 'now-6h', to: 'now' },
                 adhocFilters: []
             };
-
-            if (req.body.adhocFilters && req.body.adhocFilters.length > 0) {
-                // TODO: use filters
-            }
 
             if (req.body.targets && req.body.targets.length) {
                 const result: any = [];
