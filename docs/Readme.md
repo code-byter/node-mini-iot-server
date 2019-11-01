@@ -80,4 +80,10 @@ Build the image locally
 
 Start the container
 
-    docker run -p 49160:8000 -d uvwxy/mini-iot-server
+    docker run -p 8000:8000 -d uvwxy/mini-iot-server
+
+Or
+
+    docker-compose up -d
+
+Check the `docker-compose.yml` for details.

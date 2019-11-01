@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  app:
+    image: uvwxy/mini-iot-server
+    volumes:
+      - ./data/:/usr/src/app/data/
+    ports:
+      - 8001:8000
+    restart: always
+
