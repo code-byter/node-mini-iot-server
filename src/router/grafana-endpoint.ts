@@ -45,7 +45,7 @@ const getCSV = (filePath: string) => {
             .split("\n") // get lines
             .filter(line => line.length > 0) // non empty lines
             .map(line => line.split(",").map(entry => {
-                const num = parseFloat(entry);
+                const num = parseFloat(entry.trim());
                 const value = isNaN(num) ? 0 : num;
                 return value;
             })); // map line to column
