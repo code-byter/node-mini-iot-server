@@ -1,4 +1,4 @@
-# Mini IOT Server
+# Mini IoT Server
 
 This is a minimal server for IoT experiments.
 The idea is to have the simplest server that accepts any files as up- and downloads.
