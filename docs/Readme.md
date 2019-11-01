@@ -71,3 +71,13 @@ The following query parameters are supported:
 
 - targets
 - range
+
+## Docker
+
+Build the image locally
+
+    docker build -t uvwxy/mini-iot-server .
+
+Start the container
+
+    docker run -p 49160:8000 -d uvwxy/mini-iot-server
