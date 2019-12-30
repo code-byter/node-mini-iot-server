@@ -46,12 +46,12 @@ You can download a file
 ### Append to a file
 
 You can append the contents of a file via
-        wget --header="Content-type: multipart/form-data boundary=FILEUPLOAD" --post-file docs/example.csv "http://localhost:8000/files/your-device-id/example.csv?append=true"
+        wget --header="Content-type: multipart/form-data boundary=FILEUPLOAD" --post-file docs/example.csv "http://localhost:8000/files/your-device-id/example.csv?append=true" -O-
 
 ### Append CSV to a file
 
 You can append the contents of a file and prefix it with the servers current time (`1572611432279,`):
-        wget --header="Content-type: multipart/form-data boundary=FILEUPLOAD" --post-file oneLine.txt "http://localhost:8000/files/your-device-id/data.csv?append=true&tsprefix=true"
+        wget --header="Content-Type:text/plain"  --post-data "1,2,3" "http://localhost:8000/files/your-device-id/data.csv?append=true&tsprefix=true"
 
 This is useful where your sensor does not have a clock.
 

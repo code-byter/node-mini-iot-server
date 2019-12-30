@@ -23,7 +23,7 @@ ReadFilesRoute.register(config, router);
 
 app.use(router);
 
-const server = app.listen(config.port, () => {
+const server = app.listen(config.port, "0.0.0.0", () => {
     console.log("Started server: http://localhost:" + config.port + "/");
     console.log(config);
 });
