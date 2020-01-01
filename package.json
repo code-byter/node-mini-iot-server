@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "compile": "tsc",
-    "start" : "node dist/main.js"
+    "start": "node dist/main.js"
   },
   "author": "Paul Smith <code@uvwxy.de>",
   "license": "GPLv3",

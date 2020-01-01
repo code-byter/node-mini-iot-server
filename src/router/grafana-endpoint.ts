@@ -76,7 +76,7 @@ const createDataPointMap = (descr: CSVDescriptor, data: number[][], from?: numbe
         });
     });
 
-    console.log("Data: ", data.length, "=>", filterdedData.length);
+    // console.log("Data: ", data.length, "=>", filterdedData.length);
 
     return dataPoints;
 }
@@ -163,7 +163,7 @@ export const CsvToGrafanaRoute: RouteFactory = {
         router.all("/csv2grafana/:uuid/:file/query", (req: Request, res: Response) => {
             setCORSHeaders(res);
             console.log(req.url);
-            console.log(req.body);
+            // console.log(req.body);
 
             const filePath = config.dataDir + "/" + req.params.uuid + "/" + req.params.file;
 
