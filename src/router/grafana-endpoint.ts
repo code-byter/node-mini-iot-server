@@ -20,7 +20,8 @@ const getCSVDescriptor = (filePath: string) => {
         return descr;
     } else {
         const data = fs.readFileSync(filePath, { encoding: "UTF-8" });
-        const numColumns = data.split("\n")[0].split(",").length;
+        const rows = data.split("\n");
+        const numColumns = rows[rows.length - 1].split(",").length;
         if (numColumns) {
             const descr: CSVDescriptor = {
                 columns: []
