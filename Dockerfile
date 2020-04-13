@@ -1,11 +1,11 @@
-FROM node:10
+FROM node:13
 
 # Create app directory
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 RUN npm install
-run npm run compile
+RUN npm run compile
 
 COPY . .
 
