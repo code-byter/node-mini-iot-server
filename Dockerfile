@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 ADD package*.json ./
 ADD src/ ./src/
 ADD ts*.json ./
+ADD mini-iot-config.json ./
 RUN npm install
 RUN npm run compile
 
