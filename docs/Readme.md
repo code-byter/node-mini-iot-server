@@ -78,9 +78,9 @@ Build the image locally
 
     docker build -t uvwxy/mini-iot-server .
 
-Start the container
+Start the container for testing
 
-    docker run -p 8000:8000 -d uvwxy/mini-iot-server
+    docker run -it --rm -p 8000:8000 uvwxy/mini-iot-server
 
 Or
 
